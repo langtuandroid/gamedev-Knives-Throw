@@ -41,18 +41,7 @@ namespace WS.Script.GameManagers
             gameState = GameState.Menu;
             _listeners = new List<IObserver>();
         }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.R))
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
-            {
-                PlayerPrefs.DeleteAll();
-                SceneManager.LoadScene(0);
-            }
-        }
+        
     
         public void BeginGame()
         {

@@ -12,7 +12,7 @@ namespace WS.Script.Target
         [Inject] private WeaponHandler _weaponManager;
         private List<Target> _trgets = new();
         public Target _currentTarget { get; private set; }
-        public int _stage { get; private set; }
+        public int _stage { get; private set; } = 0;
         public int _stageToBoss { get; private set; }
 
         private void Awake()

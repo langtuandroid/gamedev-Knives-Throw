@@ -9,7 +9,7 @@ namespace WS.Script.GameManagers
         public static float LastLogin = -999;
         
         public static int CoinsData{ 
-            get => PlayerPrefs.GetInt ("Coins", 10);
+            get => PlayerPrefs.GetInt ("Coins", 1000);
             set => PlayerPrefs.SetInt ("Coins", value);
         }
         

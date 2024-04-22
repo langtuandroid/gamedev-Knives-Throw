@@ -38,8 +38,8 @@ namespace WS.Script.UI
         {
             if (!_isCounting)
                 return;
-        
-            timePassed -= Time.deltaTime;
+
+            timePassed -= 1f / 60f;
             _timerText.text = Mathf.RoundToInt(timePassed) + "";
             if(_timerImage)
                 _timerImage.fillAmount = Mathf.Clamp01(timePassed / timeToThink);
