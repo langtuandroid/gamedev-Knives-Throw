@@ -1,6 +1,8 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using WS.Script.GameManagers;
 using WS.Script.Other;
@@ -15,36 +17,36 @@ namespace WS.Script.UI
         [Inject] private SoundManager _soundManager;
         [Inject] private GameController _gameManager;
    
-        [SerializeField] private GameObject StartUI;
-        [SerializeField] private GameObject UI;
-        [SerializeField] private GameObject GameoverUI;
-        [SerializeField] private GameObject LoadingUI;
-        [SerializeField] private GameObject GamePauseUI;
-        [SerializeField] private GameObject AskForLifeUI;
-        [SerializeField] private GameObject ShopUI;
-        [SerializeField] private GameObject SettingUI;
-
+        [SerializeField] private GameObject _startMenu;
+        [SerializeField] private GameObject _gameGUI;
+        [SerializeField] private GameObject _gameOverMenu;
+        [SerializeField] private GameObject _loadingMenu;
+        [SerializeField] private GameObject _pauseMenu;
+        [SerializeField] private GameObject _askForLifeUI;
+        [SerializeField] private GameObject _shopMenu;
+        [SerializeField] private GameObject _settingsMenu;
+        
         [Space]
-        [SerializeField] private Text txtStage;
-        [SerializeField] private Text txtBossFight;
-        [SerializeField] private Text txtScore;
+        [SerializeField] private TMP_Text _stageText;
+        [SerializeField] private TMP_Text _textBoss;
+        [SerializeField] private TMP_Text _scoreText;
         [SerializeField] private Image[] levelDots;
-        [SerializeField] private Text soundStatus;
+        [SerializeField] private TMP_Text _soundStatus;
         
         [Header("LOADING PROGRESS")]
         [SerializeField] private Slider slider;
-        [SerializeField] private Text progressText;
+        [SerializeField] private TMP_Text _progressText;
         
         private void Start()
         {
-            StartUI.SetActive(true);
-            UI.SetActive(false);
-            GameoverUI.SetActive(false);
-            LoadingUI.SetActive(false);
-            GamePauseUI.SetActive(false);
-            AskForLifeUI.SetActive(false);
-            ShopUI.SetActive(false);
-            SettingUI.SetActive(false);
+            _startMenu.SetActive(true);
+            _gameGUI.SetActive(false);
+            _gameOverMenu.SetActive(false);
+            _loadingMenu.SetActive(false);
+            _pauseMenu.SetActive(false);
+            _askForLifeUI.SetActive(false);
+            _shopMenu.SetActive(false);
+            _settingsMenu.SetActive(false);
 
             if (ValueStorage.IsAutoPlay)
             {
@@ -57,7 +59,7 @@ namespace WS.Script.UI
         {
             if (_targetManager._currentTarget)
             {
-                txtStage.text = "Stage: " + (_targetManager._stage + 1);
+                _stageText.text = "Stage: " + (_targetManager._stage + 1);
 
                 if (_targetManager._currentTarget._stage != STAGE_TYPE.BossFight)
                 {
@@ -79,9 +81,9 @@ namespace WS.Script.UI
                 }
             }
 
-            soundStatus.text = ValueStorage.IsSound ? "Sound: ON" : "Sound: OFF";
+            _soundStatus.text = ValueStorage.IsSound ? "Sound: ON" : "Sound: OFF";
             AudioListener.volume = ValueStorage.IsSound ? 1 : 0;
-            txtScore.text = _gameManager.GameScore.ToString();
+            _scoreText.text = _gameManager.GameScore.ToString();
         }
 
         public void SwitchSound()
@@ -94,8 +96,8 @@ namespace WS.Script.UI
         public void Play()
         {
             _soundManager.Click();
-            StartUI.SetActive(false);
-            UI.SetActive(true);
+            _startMenu.SetActive(false);
+            _gameGUI.SetActive(true);
             _gameManager.BeginGame();
         }
 
@@ -108,8 +110,8 @@ namespace WS.Script.UI
 
         public void IPlay()
         {
-            StartUI.SetActive(false);
-            UI.SetActive(true);
+            _startMenu.SetActive(false);
+            _gameGUI.SetActive(true);
         }
 
         public void ISuccess()
@@ -142,13 +144,13 @@ namespace WS.Script.UI
         public void OpenShop(bool open)
         {
             _soundManager.Click();
-            ShopUI.SetActive(open);
+            _shopMenu.SetActive(open);
         }
 
         public void OpenSettings(bool open)
         {
             _soundManager.Click();
-            SettingUI.SetActive(open);
+            _settingsMenu.SetActive(open);
         }
 
         public void OpenLeaderboard()
@@ -169,8 +171,8 @@ namespace WS.Script.UI
                 float progress = Mathf.Clamp01(operation.progress / 0.9f);
                 if (slider != null)
                     slider.value = progress;
-                if (progressText != null)
-                    progressText.text = (int)progress * 100f + "%";
+                if (_progressText != null)
+                    _progressText.text = (int)progress * 100f + "%";
                 yield return null;
             }
         }
@@ -179,7 +181,7 @@ namespace WS.Script.UI
         {
             _soundManager.Click();
             Time.timeScale = 1;
-            LoadingUI.SetActive(true);
+            _loadingMenu.SetActive(true);
             StartCoroutine(LoadAsynchronously("MainMenu"));
 
         }
@@ -189,13 +191,13 @@ namespace WS.Script.UI
             _soundManager.Click();
             if (Time.timeScale == 0)
             {
-                GamePauseUI.SetActive(false);
+                _pauseMenu.SetActive(false);
                 Time.timeScale = 1;
                 _soundManager.PauseMusic(false);
             }
             else
             {
-                GamePauseUI.SetActive(true);
+                _pauseMenu.SetActive(true);
                 Time.timeScale = 0;
                 _soundManager.PauseMusic(true);
             }
@@ -204,12 +206,12 @@ namespace WS.Script.UI
 
         private IEnumerator GameOverCo(float time)
         {
-            UI.SetActive(false);
+            _gameGUI.SetActive(false);
 
             yield return new WaitForSeconds(time);
             
             _soundManager.PlaySfx(_soundManager.soundGameover, 0.8f);
-            GameoverUI.SetActive(true);
+            _gameOverMenu.SetActive(true);
         }
 
         public void ShowAskForLife()
@@ -219,15 +221,15 @@ namespace WS.Script.UI
 
         public void ShowUI(bool open)
         {
-            UI.SetActive(open);
+            _gameGUI.SetActive(open);
         }
 
         private IEnumerator AskForLifeCo(float time)
         {
-            if (AskForLifeUI.GetComponent<SaveMenu>().CheckSave())
+            if (_askForLifeUI.GetComponent<SaveMenu>().CheckSave())
             {
                 yield return new WaitForSeconds(time);
-                AskForLifeUI.SetActive(true);
+                _askForLifeUI.SetActive(true);
                 Time.timeScale = 0;
             }
             else
