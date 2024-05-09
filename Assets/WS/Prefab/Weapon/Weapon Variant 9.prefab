@@ -31,6 +31,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3681235679178962738, guid: 15144a1881d07cf498427e74d519f048,
         type: 3}
+      propertyPath: _name
+      value: Stormbreaker Knife
+      objectReference: {fileID: 0}
+    - target: {fileID: 3681235679178962738, guid: 15144a1881d07cf498427e74d519f048,
+        type: 3}
       propertyPath: price
       value: 10
       objectReference: {fileID: 0}

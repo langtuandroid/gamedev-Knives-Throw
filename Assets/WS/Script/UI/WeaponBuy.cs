@@ -14,7 +14,7 @@ namespace WS.Script.UI
         [FormerlySerializedAs("weapon")] [SerializeField] private Weapon.Weapon _weapon;
         [FormerlySerializedAs("itemIcon")] [SerializeField] private Image _icon;
         [FormerlySerializedAs("coinHolder")] [SerializeField] private GameObject _coinHolder;
-
+        
 
         public Weapon.Weapon Weapon => _weapon;
         private void OnEnable()

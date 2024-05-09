@@ -49,9 +49,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d7f2be67adfb642a2d8475af5d0137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponRenderer: {fileID: 4906096470709698886}
+  _weaponRenderer: {fileID: 1412927346353240909}
   _id: 1
   _price: 0
+  _name: Swift Blade
 --- !u!95 &2672781410886958535
 Animator:
   serializedVersion: 5

@@ -25,7 +25,9 @@ namespace WS.Script.Weapon
         [FormerlySerializedAs("weaponRenderer")] [SerializeField] private SpriteRenderer _weaponRenderer;
         [FormerlySerializedAs("ID")][SerializeField] private int _id = 1;
         [FormerlySerializedAs("price")] [SerializeField] private int _price;
-        
+        [SerializeField] private string _name;
+
+        public string Name => _name;
         public SpriteRenderer weaponRenderer => _weaponRenderer;
         public int Price => _price;
         public bool IsUnlocked

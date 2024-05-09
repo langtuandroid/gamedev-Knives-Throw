@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using WS.Script.GameManagers;
 using Zenject;
@@ -17,6 +18,7 @@ namespace WS.Script.UI
         [SerializeField] private Button _selectButton;
         [SerializeField] private Button _selectedButton;
         [SerializeField] private TMP_Text _textPrice;
+         [FormerlySerializedAs("_namePrice")] [SerializeField] private TMP_Text _nameText;
         private int _currentWeapon;
 
         private void Start()
@@ -38,6 +40,7 @@ namespace WS.Script.UI
             _buyButton.gameObject.SetActive(false);
             _selectButton.gameObject.SetActive(false);
             _selectedButton.gameObject.SetActive(false);
+            _nameText.text = _weaponBuy[_currentWeapon].Weapon.Name;
             
             if (_weaponBuy[_currentWeapon].Weapon.IsUnlocked)
             {
